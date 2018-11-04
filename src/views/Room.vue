@@ -3,18 +3,33 @@
     <img alt="Loading" src="../assets/loading.gif">
   </div>
   <div v-else class="room">
-    <Game :room="room"/>
+    <room-roster v-if="room.state === 'waiting'" :roomName="room.id" :players="room.players" @start-game="startGame"/>
+    <room-game v-if="room.state === 'running'" :room="room"/>
   </div>
 </template>
 
 <script>
-    import Game from '@/components/Game.vue';
+    import RoomGame from '@/components/RoomGame.vue';
+    import RoomRoster from '@/components/RoomRoster.vue';
+
     import rabisco from '@/rabisco.js';
 
     export default {
         name: 'room',
         components: {
-            Game
+            'room-game': RoomGame,
+            'room-roster': RoomRoster
+        },
+        methods: {
+            startGame() {
+                rabisco.start(this.room.id)
+                  .then(this.reloadRoom)
+                  .catch(() => this.$notify({type: 'error', text: 'Garrô aqui. Tenta de novo!'}));
+            },
+            reloadRoom() {
+                rabisco.getRoom(this.$route.params.id)
+                  .then(response => this.room = response.data);
+            }
         },
         data() {
             return {
@@ -22,17 +37,17 @@
             };
         },
         created() {
-            var loadData = () => {
-                rabisco.getRoom(this.$route.params.id)
-                  .then(response => this.room = response.data);
-            };
-            loadData();
-            setInterval(loadData, 15000);
+            this.reloadRoom();
+            setInterval(this.reloadRoom, 800);
         }
     };
 </script>
 <style scoped>
   .waiting {
     text-align: center;
+  }
+
+  .room {
+    padding: 30px;
   }
 </style>

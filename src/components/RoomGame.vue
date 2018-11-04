@@ -5,9 +5,9 @@
     </div>
     <div class="sketchpad dynamic"></div>
 
-    <textarea v-if="room.currentRound.type === 'description'" class="value"
+    <textarea v-if="room.rounds[1].type === 'description'" class="value"
               placeholder="Descreva o desenho acima"></textarea>
-    <div v-if="room.currentRound.type === 'drawing'" class="description static">{{ room.previousRound.value }}</div>
+    <div v-if="room.rounds[1].type === 'drawing'" class="description static">{{ room.rounds[0].value }}</div>
 
     <div class="control">
       <button @click="play()" class="pure-button pure-button-primary">Terminei</button>
@@ -53,7 +53,7 @@
         }
     }
 
-    function padInit(baseElement, currType, prevValue) {
+    function padInit(baseElement) {
         const properties = {
             line: {
                 size: 10
@@ -84,8 +84,6 @@
         el = baseElement.querySelector('.sketchpad.dynamic');
         rwpad = new Sketchpad(el, properties);
         rwpad.el = el;
-
-        padReset(currType, prevValue);
     }
 
     export default {
@@ -101,11 +99,11 @@
                 handler(newRoom, prevRoom) {
                     // no need to redraw everything if nothing really changed
                     if (!this.$_.isEqual(newRoom, prevRoom)) {
-                        if (newRoom.currentRound.round > prevRoom.currentRound.round) {
+                        if (newRoom.round > prevRoom.round) {
                             // new round clear inputs
                             this.clearInputs();
                         }
-                        padReset(newRoom.currentRound.type, newRoom.previousRound.value);
+                        padReset(newRoom.rounds[1].type, newRoom.rounds[0].value);
                     }
                 },
                 deep: true
@@ -121,15 +119,15 @@
             },
             play() {
                 let value;
-                if (this.room.currentRound.type === 'drawing') {
+                if (this.room.rounds[1].type === 'drawing') {
                     value = padGetValue();
                 } else {
                     value = this.$el.querySelector('textarea').value;
                 }
                 const round = {
-                    type: this.room.currentRound.type,
+                    type: this.room.rounds[1].type,
                     value: value,
-                    round: this.room.currentRound.round
+                    round: this.room.rounds[1].round
                 };
                 rabisco.play(this.room.id, round)
                   .then(() => this.$notify({type: 'success', text: 'Muito bem! Enviado!'}))
@@ -137,7 +135,8 @@
             }
         },
         mounted() {
-            padInit(this.$el, this.room.currentRound.type, this.room.previousRound.value);
+            padInit(this.$el);
+            padReset(this.room.rounds[1].type, this.room.rounds[0].value);
         }
     };
 </script>

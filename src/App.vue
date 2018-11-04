@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <notifications position="top center"/>
-    <TheHeader/>
+    <the-header/>
     <router-view/>
   </div>
 </template>
@@ -12,7 +12,7 @@
     export default {
         name: 'app',
         components: {
-            TheHeader
+            'the-header': TheHeader
         }
     };
 </script>
