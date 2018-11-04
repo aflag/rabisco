@@ -12,7 +12,7 @@
     import RoomGame from '@/components/RoomGame.vue';
     import RoomRoster from '@/components/RoomRoster.vue';
 
-    import rabisco from '@/rabisco.js';
+    import rabisco from '@/mixins/rabisco';
 
     export default {
         name: 'room',

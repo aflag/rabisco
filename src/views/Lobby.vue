@@ -20,7 +20,7 @@
 <script>
     import SecondaryHeader from '@/components/SecondaryHeader.vue';
 
-    import rabisco from '@/rabisco.js';
+    import rabisco from '@/mixins/rabisco';
 
     export default {
         name: 'lobby',
