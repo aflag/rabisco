@@ -15,6 +15,7 @@
 <script>
     import Sketchpad from 'responsive-sketchpad';
 
+    import {properties as padProperties} from '@/mixins/sketchpad';
     import rabisco from '@/mixins/rabisco';
 
     let pad;
@@ -82,13 +83,7 @@
             }
         },
         mounted() {
-            const properties = {
-                line: {
-                    size: 10
-                },
-                aspectRatio: 0.5625
-            };
-            pad = new Sketchpad(this.$el.querySelector('.sketchpad'), properties);
+            pad = new Sketchpad(this.$el.querySelector('.sketchpad'), padProperties);
             padReset(this.room.rounds[1].type, this.room.rounds[0].value);
         }
     };

@@ -41,6 +41,11 @@ function login(name) {
       .post(`${BACKEND_HOST}/login`, {name: name}, {withCredentials: true});
 }
 
+function nextScore(roomId) {
+    return axios
+      .post(`${BACKEND_HOST}/rooms/${roomId}/round/next`, {name: name}, {withCredentials: true});
+}
+
 export default {
     getRoom,
     play,
@@ -48,5 +53,6 @@ export default {
     joinRoom,
     getMe,
     login,
-    start
+    start,
+    nextScore
 };

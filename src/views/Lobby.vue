@@ -1,11 +1,15 @@
 <template>
   <div class="lobby" v-if="backend.phonedHome">
-    <form v-if="backend.playerName" action="javascript:void(0);" class="pure-form">
-      <button class="create pure-button pure-button-primary" @click="createRoom()">Criar novo jogo</button>
-      <div class="choice">ou</div>
-      <input v-model="roomId" type="text" placeholder="Nome do jogo" autofocus>
-      <button class="pure-button pure-button-primary" @click="join()">Entrar</button>
-    </form>
+    <div v-if="backend.playerName">
+      <form action="javascript:void(0);" class="pure-form">
+        <button class="create pure-button pure-button-primary" @click="createRoom()">Criar novo jogo</button>
+      </form>
+        <div class="choice">ou</div>
+      <form action="javascript:void(0);" class="pure-form">
+        <input v-model="roomId" type="text" placeholder="Nome do jogo" autofocus>
+        <button class="pure-button pure-button-primary" @click="join()">Entrar</button>
+      </form>
+    </div>
     <form v-else action="javascript:void(0);" class="pure-form login">
       <secondary-header title="Seu nome, seu bairro"/>
       <input v-model="input.playerName" type="text" placeholder="Seu nome" autofocus>
