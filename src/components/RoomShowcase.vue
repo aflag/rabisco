@@ -28,7 +28,6 @@
             nextScore() {
                 this.$emit('next-score');
                 let button = this.$el.querySelector('button');
-                console.log(button);
                 button.disabled = true;
                 setTimeout(() => button.disabled = false, 2000);
             }

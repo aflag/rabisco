@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Rabisco</h1>
+    <h1><router-link :to="{name: 'home'}">Rabisco</router-link></h1>
   </header>
 </template>
 
@@ -17,5 +17,15 @@ h1 {
   text-align: center;
   margin: 0;
   font-weight: normal;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #afafaf;
+  text-decoration:none;
+  cursor:pointer;
 }
 </style>

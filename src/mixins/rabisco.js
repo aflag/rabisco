@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_HOST = "http://192.168.0.3:8000";
+const BACKEND_HOST = "https://api.rabisco.kontesti.me";
 
 function play(roomId, round) {
     let payload = {
